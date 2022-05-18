@@ -1,0 +1,15 @@
+from itertools import product
+
+def solution(numbers, target):
+    nlist = list(product([0,1], repeat=len(numbers)))
+    answer = 0
+    for i in nlist:
+        ans = 0
+        for j in range(len(i)):
+            if i[j] == 0:
+                ans += numbers[j]
+            else:
+                ans -= numbers[j]
+        if ans == target:
+            answer += 1
+    return answer
