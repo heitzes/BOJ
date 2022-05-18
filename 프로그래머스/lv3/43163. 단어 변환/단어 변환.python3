@@ -1,0 +1,38 @@
+from collections import defaultdict
+visited = []
+find = False
+def dfs(ref, node, target):
+    global find
+    if node not in visited:
+        visited.append(node)
+    if target in ref[node]:
+        find = True
+        return visited
+    for ch in ref[node]:
+        if ch not in visited and not find:
+            dfs(ref, ch, target)
+    
+
+def solution(begin, target, words):
+    dc = defaultdict(list)
+    leng = len(words)
+    words.insert(0,begin)
+    for i in range(leng):
+        w1 = words[i]
+        for j in range(i+1,leng+1):
+            w2 = words[j]
+            diff = 0
+            for k in range(len(w1)):
+                if w1[k] == w2[k]:
+                    pass
+                else:
+                    diff += 1
+            if diff == 1:
+                dc[w1].append(w2)
+                dc[w2].append(w1)
+    if target in words:
+        dfs(dc, begin, target)
+        return len(visited)
+    else:
+        return 0
+print(solution("hit", "cog", ["hot", "dot", "dog", "lot", "log"]))
