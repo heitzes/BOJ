@@ -1,0 +1,24 @@
+from collections import defaultdict
+visited = ["ICN"]
+def dfs(node, dc, n):
+    if len(visited) == n+1:
+        return visited
+    for ch in dc[node]:
+        visited.append(ch)
+        dc[node].remove(ch)
+        dfs(ch, dc, n)
+        if len(visited) != n+1:
+            visited.pop()
+            dc[node].append(ch)
+
+def solution(tickets):
+    dc = defaultdict(list)
+    n = len(tickets)
+    for i in tickets:
+        x, y = i
+        dc[x].append(y)
+    for j in dc:
+        dc[j] = sorted(dc[j]) 
+    while len(visited) != n+1:
+        dfs("ICN", dc, n)
+    return visited
