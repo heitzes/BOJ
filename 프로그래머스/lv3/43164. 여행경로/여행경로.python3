@@ -1,3 +1,4 @@
+# 재귀 풀이
 from collections import defaultdict
 visited = ["ICN"]
 def dfs(node, dc, n):
@@ -7,10 +8,10 @@ def dfs(node, dc, n):
         visited.append(ch)
         dc[node].remove(ch)
         dfs(ch, dc, n)
+        # 백트래킹(?) -> 복구작업
         if len(visited) != n+1:
             visited.pop()
             dc[node].append(ch)
-
 def solution(tickets):
     dc = defaultdict(list)
     n = len(tickets)
@@ -19,6 +20,28 @@ def solution(tickets):
         dc[x].append(y)
     for j in dc:
         dc[j] = sorted(dc[j]) 
+    # while문과 재귀적 풀이를 함께 사용할 수 있다.
     while len(visited) != n+1:
         dfs("ICN", dc, n)
     return visited
+
+# 스택
+def solution(tickets):
+    dc = defaultdict(list)
+    n = len(tickets)
+    for i in tickets:
+        x, y = i
+        dc[x].append(y)
+    for j in dc:
+        dc[j] = sorted(dc[j]) 
+    stack = ["ICN"]
+    answer = []
+    while stack:
+        node = stack[-1]
+        if dc[node]:
+            stack.append(dc[node].pop(0))
+        else:
+            answer.append(stack.pop())
+    answer.reverse()
+
+    return answer
