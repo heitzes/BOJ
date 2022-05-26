@@ -1,0 +1,19 @@
+def solution(answers):
+    leng = len(answers)
+    one, two, thr = 0, 0, 0
+    onep = [1,2,3,4,5]
+    twop = [2, 1, 2, 3, 2, 4, 2, 5]
+    thrp = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]    
+    for num in range(leng):
+        corr = answers[num]
+        if onep[num % 5] == corr:
+            one += 1
+        if twop[num % 8] == corr:
+            two += 1
+        if thrp[num % 10] == corr:
+            thr += 1
+    anslist = [one, two, thr]
+    maxi = max(anslist)
+    ans = [i+1 for i in range(3) if anslist[i] == maxi]
+        
+    return ans
