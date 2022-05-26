@@ -1,0 +1,23 @@
+def find(n):
+    devlist = []
+    for i in range(3, n):
+        print(i)
+        if n % i == 0:
+            if n//i not in devlist:
+                devlist.append(i)
+                print(devlist)
+            else:
+                 break
+    return devlist
+            
+def solution(brown, yellow):
+    total = brown + yellow
+    check = find(total)
+    print(check)
+    for ch in check:
+        one = ch - 2
+        two = total//ch - 2
+        if one * two == yellow:
+            answer = [two + 2, one + 2]
+        
+    return answer
