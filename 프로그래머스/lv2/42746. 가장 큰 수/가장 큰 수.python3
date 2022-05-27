@@ -1,0 +1,12 @@
+def solution(numbers):
+    numbers = [str(s) for s in numbers]
+    ref = []
+    for num in numbers:
+        ref.append(((num*4)[:4], len(num)))
+    ref = sorted(ref, reverse=True)
+    answer = str()
+    for r in ref:
+        num = int(r[0][:r[1]])
+        answer += str(num)
+    answer = str(int(answer))
+    return answer
