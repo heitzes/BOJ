@@ -4,16 +4,16 @@ def solution(prices):
     answer[-1] = 0
     stack = deque()
     stack.append((-1,0))
-    prices = deque(enumerate(prices))
-    while prices:
-        if prices[0][1] >= stack[-1][1]:
-            stack.append(prices.popleft())
+    queue = deque(enumerate(prices))
+    while queue:
+        if queue[0][1] >= stack[-1][1]:
+            stack.append(queue.popleft())
         else:
-            while prices[0][1] < stack[-1][1]:
+            while queue[0][1] < stack[-1][1]:
                 if stack[-2][0] != -1:
                     answer[stack[-2][0]] += answer[stack[-1][0]] 
                 stack.pop()
-            stack.append(prices.popleft())
+            stack.append(queue.popleft())
     stack.popleft()
     while stack:
         i, j = stack.pop()
