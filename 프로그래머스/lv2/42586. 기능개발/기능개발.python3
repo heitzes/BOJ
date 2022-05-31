@@ -1,0 +1,22 @@
+from collections import deque
+def solution(progresses, speeds):
+    answer = []
+    ref = deque()
+    for prog,speed in zip(progresses, speeds):
+        day = (100-prog)/speed
+        if int(day) == day:
+            ref.append(int(day))
+        else:
+            ref.append(int(day)+1)
+    ref.append(1000)
+    comp = ref.popleft()
+    cnt = 1
+    while len(ref) != 0:
+        if ref[0] <= comp:
+            ref.popleft()
+            cnt += 1
+        else:
+            answer.append(cnt)
+            comp = ref.popleft()
+            cnt = 1
+    return answer
