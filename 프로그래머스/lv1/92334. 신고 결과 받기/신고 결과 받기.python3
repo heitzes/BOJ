@@ -1,0 +1,19 @@
+from collections import defaultdict
+def solution(id_list, report, k):
+    answer = []
+    check = defaultdict(list)
+    count = defaultdict(int)
+    ans = defaultdict(int)
+    for rep in report:
+        a, b = rep.split()
+        if a not in check[b]:
+            check[b].append(a)
+            count[b] += 1
+    for i in id_list:
+        if count[i] >= k:
+            for j in check[i]:
+                ans[j] += 1
+    for i in id_list:
+        answer.append(ans[i])
+
+    return answer
