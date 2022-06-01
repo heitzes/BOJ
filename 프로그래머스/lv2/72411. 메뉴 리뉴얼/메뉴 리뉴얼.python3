@@ -1,26 +1,19 @@
 from itertools import combinations
-from collections import defaultdict
+from collections import defaultdict, Counter
 def solution(orders, course):
     answer = []
     cdict = defaultdict(int)
-    for order in orders:
-        for co in course:
-            if co <= len(order):
-                comb = [''.join(i) for i in list(combinations(order, co))]
-                for c in comb:
-                    cdict[''.join(sorted(c))] += 1
-    revcdict = defaultdict(list)
-    for i, j in cdict.items():
-        if j != 1:
-            revcdict[len(i)].append([i, j])
-    for c in course:
-        if c in revcdict:
-            revcdict[c] = sorted(revcdict[c], key = lambda x: x[1], reverse = True)
-            for menu in revcdict[c]:
-                if menu[1] == revcdict[c][0][1]:
-                    answer.append(menu[0])
-                else:
-                    break
+    
+    for co in course:
+        ref = []
+        for order in orders:
+            ref += [''.join(i) for i in list(combinations(sorted(order), co))]
+        count = Counter(ref).most_common()
+        for menu in count:
+            if menu[1] > 1 and menu[1] == count[0][1]:
+                answer.append(menu[0])
+            else:
+                break
     answer = sorted(answer)
 
 
