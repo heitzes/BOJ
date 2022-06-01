@@ -1,0 +1,43 @@
+from collections import defaultdict
+def balance(p):
+    count = defaultdict(int)
+    for i in range(len(p)):
+        count[p[i]] += 1
+        if count['('] == count[')']:
+            return p[:i+1], p[i+1:]
+        
+def correct(p):
+    stack = []
+    if p[0] == ')':
+        return False
+    for i in p:
+        if i == ')':
+            if stack and stack[-1] == '(':
+                    stack.pop()
+            else:
+                return False
+        else:
+            stack.append(i)
+    return True
+
+def reverse(p):
+    ret = ''
+    for i in p:
+        if i == ')':
+            ret += '('
+        else:
+            ret += ')'
+    return ret
+
+def recursive(p):
+    if p == '':
+        return p
+    u, v = balance(p)
+    if correct(u):
+        return u + recursive(v)
+    else:
+        return '(' + recursive(v) + ')' + reverse(u[1:-1])
+
+def solution(p):
+    answer = recursive(p)
+    return answer
