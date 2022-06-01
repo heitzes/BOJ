@@ -1,0 +1,16 @@
+def solution(record):
+    answer = []
+    act_dict = {}
+    for rec in record:
+        act = rec.split()
+        if act[0] == "Enter":
+            act_dict[act[1]] = act[2]
+            answer.append("{}님이 들어왔습니다.".format(act[1]))
+        elif act[0] == "Change":
+            act_dict[act[1]] = act[2]
+        else:
+            answer.append("{}님이 나갔습니다.".format(act[1]))
+    for res in range(len(answer)):
+        uid = answer[res].split("님")
+        answer[res] = act_dict[uid[0]] + '님' + uid[1]
+    return answer
