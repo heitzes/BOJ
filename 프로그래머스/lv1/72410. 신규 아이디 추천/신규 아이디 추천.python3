@@ -1,0 +1,27 @@
+def solution(new_id):
+    answer = ''
+    new_id = new_id.lower()
+    ords = [45, 46, 95]
+    ords.extend([i for i in range(97, 123)])
+    ords.extend([i for i in range(48, 58)])
+    ref = ''
+    for ch in new_id:
+        if ord(ch) in ords:
+            ref += ch
+    while '..' in ref:
+        ref = ref.replace("..", '.')
+   
+    if ref and ref[0] == '.':
+        ref = ref[1:]
+    if ref and ref[-1] == '.':
+        ref = ref[:-1]
+    if not ref:
+        ref = 'a'
+    if len(ref) >= 16:
+        ref = ref[:15]
+    if ref[-1] == '.':
+        ref = ref[:-1]
+    if len(ref) <= 2:
+        ref += (3-len(ref))*ref[-1]
+    answer = ref
+    return answer
