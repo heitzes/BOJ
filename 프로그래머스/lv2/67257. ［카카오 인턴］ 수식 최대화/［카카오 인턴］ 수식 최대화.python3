@@ -10,7 +10,6 @@ def calculate(x, a, b):
 
 def solution(expression):
     answer = 0
-    ans = []
     ex = set()
     refnums = ''
     for char in expression:
@@ -32,7 +31,6 @@ def solution(expression):
                     ref.append(item)
             ref.extend(rnums)
             rnums = deque(ref)
-        ans.append(abs(rnums[0]))
-    answer = max(ans)
+        answer = max(answer, abs(rnums[0]))
             
     return answer
