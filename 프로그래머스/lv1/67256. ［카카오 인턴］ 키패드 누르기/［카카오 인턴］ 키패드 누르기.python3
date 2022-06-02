@@ -1,0 +1,37 @@
+def solution(numbers, hand):
+    answer = ''
+    h = {"right": "R", "left": 'L'}
+    card = {num: [(num-1)//3, (num-1)%3] for num in range(10) if num!= 0}
+    card[0] = [3,1]
+    card['*'] = [3, 0]
+    card['#'] = [3, 2]
+    lnum, rnum = '*', '#'
+    for n in range(len(numbers)):
+        num = numbers[n]
+        if num in [1, 4, 7]:
+            answer += 'L'
+            lnum = num
+        elif num in [3, 6, 9]:
+            answer += 'R'
+            rnum = num
+        else:
+            llen = abs(card[num][0]-card[lnum][0]) + abs(card[num][1]-card[lnum][1])
+            rlen = abs(card[num][0]-card[rnum][0]) + abs(card[num][1]-card[rnum][1]) 
+            if llen == rlen:
+                if hand == 'right':
+                    rnum = num
+                else:
+                    lnum = num
+                answer += h[hand]
+                
+                
+            elif llen > rlen:
+                answer += 'R'
+                rnum = num
+            else:
+                answer += 'L'
+                lnum = num
+        
+            
+            
+    return answer
