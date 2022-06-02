@@ -1,0 +1,45 @@
+from itertools import permutations
+from collections import deque
+def calculate(x, a, b):
+    if x == '*': 
+        return a*b
+    elif x == '+':
+        return a+b
+    else:
+        return a-b
+
+def solution(expression):
+    answer = 0
+    ans = []
+    ex = ''
+    sign = ['-', '*', '+']
+    for n in expression:
+        if n in sign:
+            ex += n
+            expression = expression.replace(n, ' ')
+    nums = [int(i) for i in expression.split()]
+    refnums = []
+    for i in range(len(ex)):
+        refnums.append(nums[i])
+        refnums.append(ex[i])
+    refnums.append(nums[-1])
+    primary = [list(i) for i in permutations(set(ex), len(set(ex)))]
+    for p in primary:
+        rnums = deque(refnums)
+        for _ in range(len(p)):
+            ref = []
+            x = p.pop(0)
+            while rnums and x in set(rnums):
+                item = rnums.popleft()
+                if item == x:
+                    ref.append(calculate(x, ref.pop(), rnums.popleft()))
+                else:
+                    ref.append(item)
+            ref.extend(rnums)
+            rnums = deque(ref)
+        ans.append(abs(rnums[0]))
+    answer = max(ans)
+            
+    
+    
+    return answer
