@@ -1,12 +1,5 @@
-from collections import defaultdict
 from itertools import combinations
 from bisect import bisect_left, bisect_right
-
-def compare(a, b):
-    if b == '-':
-         return True
-    else:
-        return a == b
     
 def solution(info, query):
     answer = []
@@ -45,85 +38,9 @@ def solution(info, query):
         tp = ''.join(mask[j] for j in [a, b, c, d])
         cnt = 0
         left = bisect_left(idict[tp], int(e))
-        #right = bisect_right(idict[tp], int(e))
         if left == len(idict[tp]):
             answer.append(0)
         else:
             answer.append(len(idict[tp])-left)
-        # if left != right:
-        #     answer.append(idict[tp][keys[left]])   
-        # else:
-        #     answer.append(0)
-        # print(left)
-        # print(idict[tp][keys[left]])
-        # for j in list(idict[tp].keys())[::-1]:
-        #     if j >= int(e):
-        #         cnt += idict[tp][j]
-        #         break
-            #cnt += sum(idict[tp][int(e):])
-        #answer.append(idict[tp][keys[left]])   
-    
-    
-#         for j in idict:
-#             if set(j).issubset(set(tp)):
-                
-        
-#         try:
-#             bef = list(idict[tp].keys())[-1]
-#             idict[tp][int(e)] += 1 + idict[tp][bef]
-#         except:
-#             idict[tp][int(e)] += 1
-        # if tp not in idict:
-        #     idict[tp] = defaultdict(int)
-        #     idict[tp][int(e)] += 1  
-        # else:
-            # try:
-            #     bef = list(idict[tp].keys())[-1]
-            #     idict[tp][int(e)] += 1 + idict[tp][bef]
-            # except:
-            #     idict[tp][int(e)] += 1
-#     for q in query:
-#         a, b, c, d = q.split(' and ')
-#         d, e = d.split()
-#         tp = ''.join(mask[j] for j in [a, b, c, d])
-#         cnt = 0
-#         for i in idict:
-#             if set(tp).issubset(set(i)):
-#                 print(i, tp)
-#                 for j in list(idict[i].keys())[::-1]:
-#                     if j >= int(e):
-#                         cnt += idict[i][j]
-#                         break
-#                 #cnt += sum(idict[tp][int(e):])
-                
-#         answer.append(cnt)          
-    
-#     score = set()
-#     for q in query:
-#         score.add(int(q[::-1].split()[0][::-1]))
-#     score = sorted(list(score))
-#     qdict = {s: [] for s in score}
-#     idict = defaultdict(list)
-#     info = sorted(info, key = lambda x: int(x.split()[-1]))
-#     for i in info:
-#         a, b, c, d, e = i.split()
-#         idict[int(e)].append([a, b, c, d])
-        
-#     for i in idict:
-#         for s in qdict:
-#             if i >= s:
-#                 qdict[s] += idict[i]
-#             else:
-#                 break
-#     for q in query:
-#         a, b, c, d = q.split(" and ")
-#         d, e = str(d).split(" ")
-#         cnt = 0
-#         for apply in qdict[int(e)]:
-#             aa, bb, cc, dd = apply
-#             if compare(aa, a) and compare(bb, b) and compare(cc, c) and compare(dd, d):
-#                 cnt += 1
-#         answer.append(cnt)
-    
-        
+
     return answer
