@@ -1,0 +1,29 @@
+import math
+
+def solution(fees, records):
+    answer = []
+    records = sorted(records, key = lambda x: int(x.split()[1]))
+    cars = dict()
+    rcars = dict()
+    for rec in records:
+        time, num, opt = rec.split()
+        h, m = time.split(":")
+        if num not in cars:
+            cars[num] = [60*int(h)+int(m)]
+            rcars[num] = 0
+        else:
+            if opt == 'OUT':
+                rcars[num] += 60*int(h)+int(m) - cars[num].pop()
+            else:
+                cars[num].append(60*int(h)+int(m))
+    for num in cars:
+        if cars[num]:
+            rcars[num] += (23*60+59) - cars[num][0]
+    base_m, base_w, unit_m, unit_w = fees
+    for num in rcars:
+        if rcars[num] <= base_m:
+            answer.append(base_w)
+        else:
+            answer.append(base_w + (math.ceil((rcars[num]-base_m)/unit_m))*unit_w)
+    
+    return answer
