@@ -1,0 +1,14 @@
+def solution(s):
+    answer = []
+    s = s[2:-2]
+    slist = s.split("},{")
+    slist = sorted(slist, key = lambda x: len(x))
+    slist = [[int(j) for j in i.split(",")] for i in slist]
+    ref = slist[-1]
+    for i in slist:
+        for j in i:
+            if j in ref:
+                answer.append(j)
+                ref.remove(j)
+    
+    return answer
