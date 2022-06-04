@@ -1,6 +1,5 @@
 from collections import defaultdict
 def solution(str1, str2):
-    answer = 0
     str1, str2 = str1.lower(), str2.lower()
     s1dict, s2dict = defaultdict(int), defaultdict(int)
     s1 = [str1[i:i+2] for i in range(len(str1)-1) if str1[i:i+2].isalpha()]
@@ -10,14 +9,8 @@ def solution(str1, str2):
     for i in s2:
         s2dict[i] += 1
     inter, union = set(s1) & set(s2) , set(s1) | set(s2)
-    cnt1, cnt2 = 0, 0
-    for i in inter:
-        cnt1 += min(s1dict[i], s2dict[i])
-    for i in union:
-        cnt2 += max(s1dict[i], s2dict[i])
+    cnt1, cnt2 = sum([min(s1dict[i], s2dict[i]) for i in inter]), sum([max(s1dict[i], s2dict[i]) for i in union])
     if not cnt1 and not cnt2:
         return 65536
     else:
         return int(cnt1/cnt2*65536)
-    
-    return answer
