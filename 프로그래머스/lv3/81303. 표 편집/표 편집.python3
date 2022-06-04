@@ -1,0 +1,48 @@
+from collections import deque
+def move(c, p, table, stack):
+    if c[0] == 'U':
+        for i in range(int(c[1])):
+            p, _ = table[p]
+    elif c[0] == 'D':
+        for i in range(int(c[1])):
+            _, p = table[p]
+    elif c[0] == 'C':
+        prv, nxt = table[p]
+        stack.append((prv, p, nxt))
+        if prv != None and nxt != None:
+            table[nxt][0] = prv
+            table[prv][1] = nxt
+            p = nxt
+        else:
+            if prv == None:
+                table[nxt][0] = prv
+                p = nxt
+            else:
+                table[prv][1] = nxt
+                p = prv
+    else:
+        prv, tg, nxt = stack.pop()
+        if prv != None and nxt != None:
+            table[prv][1] = tg
+            table[nxt][0] = tg
+        else:
+            if prv == None:
+                table[nxt][0] = tg
+            else:
+                table[prv][1] = tg
+    return p, table, stack
+
+def solution(n, k, cmd):
+    answer = ['O'] * n    
+    pos, remove = k, deque()
+    link = {i: [i-1, i+1] for i in range(n)}
+    link[0][0] = None
+    link[n-1][1] = None
+
+    for cm in cmd:
+        sp = cm.split()
+        pos, link, remove = move(sp, pos, link, remove)
+    for rem in remove:
+        answer[rem[1]] = 'X'
+    
+    return ''.join(answer)
