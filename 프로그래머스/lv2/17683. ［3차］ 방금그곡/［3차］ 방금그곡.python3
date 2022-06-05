@@ -1,0 +1,34 @@
+import math
+def replace(melody):
+    while "#" in set(melody):
+        melody = melody.replace("C#", "1")
+        melody = melody.replace("D#", "2")
+        melody = melody.replace("F#", "3")
+        melody = melody.replace("G#", "4")
+        melody = melody.replace("A#", "5")
+        melody = melody.replace("E#", "6")
+        melody = melody.replace("B#", "7")        
+    return melody
+def solution(m, musicinfos):
+    answer = []
+    m = replace(m)
+    for i, music in enumerate(musicinfos):
+        start, end, name, code = music.split(",")
+        code = replace(code)
+        endh, endm = end.split(":")
+        starth, startm = start.split(":")
+        time = 60*(int(endh)- int(starth)) + int(endm) - int(startm)
+        if set(m).issubset(set(code)):
+            if time >= len(code):
+                replay = math.ceil(time/len(code))
+                hear = code * replay
+                if m in hear:
+                    answer.append((time, i, name))
+            else:
+                if m in code[:time]:
+                    answer.append((time, i, name))
+    if len(answer) >= 1:
+        answer = sorted(answer, key = lambda x: (x[0], -x[1]))
+        return answer[-1][2]
+    else:
+        return "(None)"
