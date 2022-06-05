@@ -1,0 +1,24 @@
+from collections import deque
+def solution(cacheSize, cities):
+    if cacheSize == 0:
+        answer = 5 * len(cities)
+    else:        
+        cities = [i.lower() for i in cities]
+        cache = deque(cities[:cacheSize])
+        if len(cache) == len(set(cache)):
+            answer = 5 * cacheSize
+        else:
+            answer = 1 * (cacheSize - len(set(cache))) + 5 * len(set(cache))
+        cities = deque(cities[cacheSize:])
+        while cities and cache:
+            current = cities.popleft()
+            if current in cache:
+                cache.remove(current)
+                cache.append(current)
+                answer += 1
+            else:
+                answer += 5
+                cache.popleft()
+                cache.append(current)
+            
+    return answer
