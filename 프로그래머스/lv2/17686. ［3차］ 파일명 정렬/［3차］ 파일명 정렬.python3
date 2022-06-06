@@ -1,0 +1,18 @@
+def solution(files):
+    answer = []
+    for i, file in enumerate(files):
+        ind = []
+        for j in range(len(file)):
+            if not ind and file[j].isnumeric():
+                ind.append(j)
+            if ind and not file[j].isnumeric():
+                ind.append(j)
+                break
+        if len(ind) == 1:
+            head, number, tail = file[:ind[0]], file[ind[0]:], ''
+        else:
+            head, number, tail = file[:ind[0]], file[ind[0]:ind[1]], file[ind[1]:]
+        answer.append([head, number, tail, i])
+    answer = sorted(answer, key = lambda x: (x[0].lower(), int(x[1]), i))
+    answer = [''.join(i[:-1]) for i in answer]
+    return answer
