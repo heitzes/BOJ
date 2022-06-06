@@ -10,8 +10,6 @@ def change(n, c):
     return ret[::-1]
 
 def solution(n, t, m, p):
-    answer = []
-    nzin = {i: i-1 for i in range(2, 11)}
     ref = ''
     tind = [p-1 + m * k for k in range(t)]
     cur = 0
