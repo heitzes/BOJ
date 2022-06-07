@@ -1,0 +1,15 @@
+from collections import defaultdict
+def solution(participant, completion):
+    answer = ''
+    n = len(completion)
+    maraton = defaultdict(int)
+    for i in range(n):
+        maraton[completion[i]] -= 1
+        maraton[participant[i]] += 1
+    maraton[participant[-1]] += 1
+    for k in maraton:
+        if maraton[k] != 0:
+            answer = k
+            break
+    
+    return answer
