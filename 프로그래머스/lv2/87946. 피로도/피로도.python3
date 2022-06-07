@@ -1,0 +1,13 @@
+from itertools import permutations
+def solution(k, dungeons):
+    answer = 0
+    nlist = [i for i in range(len(dungeons))]
+    perm = list(permutations(nlist, len(nlist)))
+    for p in perm:
+        cnt, power = 0, k
+        for d in p:
+            if dungeons[d][0] <= power:
+                cnt += 1
+                power -= dungeons[d][1]
+        answer = max(answer, cnt)
+    return answer
