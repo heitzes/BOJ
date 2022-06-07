@@ -1,0 +1,13 @@
+from collections import defaultdict
+def solution(genres, plays):
+    answer = []
+    n = len(genres)
+    count = defaultdict(int)
+    psort = defaultdict(list)
+    for i in range(n):
+        count[genres[i]] += plays[i]
+        psort[genres[i]].append((i, plays[i]))
+    popular = sorted(list(count.items()), key = lambda x: -x[1])
+    for p in popular:
+        answer += [i[0] for i in sorted(psort[p[0]], key = lambda x: (-x[1], x[0]))[:2]]
+    return answer
