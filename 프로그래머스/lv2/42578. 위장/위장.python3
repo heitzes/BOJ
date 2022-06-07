@@ -1,0 +1,19 @@
+from collections import defaultdict
+from itertools import combinations
+def solution(clothes):
+    answer = 0
+    closet = defaultdict(int)
+    for cloth in clothes:
+        closet[cloth[1]] += 1
+    types = list(closet.keys())
+    if len(types) == len(clothes):
+        return 2**len(types) - 1
+    comb = []
+    for i in range(1, len(types)+1):
+        comb += [list(i) for i in combinations(types, i)]
+    for c in comb:
+        cnt = 1
+        for i in range(len(c)):
+            cnt *= (closet[c[i]])
+        answer += cnt
+    return answer
