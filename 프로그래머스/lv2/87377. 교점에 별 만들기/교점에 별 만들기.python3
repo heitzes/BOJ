@@ -1,0 +1,28 @@
+import math
+def cross(x, y):
+    a, b, e = x
+    c, d, f = y
+    if a*d != b*c:
+        x = (b*f - e*d) / (a*d - b*c)
+        y = (e*c - a*f) / (a*d - b*c)
+        if int(x) == x and int(y) == y:
+            return int(x), int(y)
+def solution(line):
+    answer = []
+    n = len(line)
+    for i in range(n):
+        for j in range(i+1, n):
+            cs = cross(line[i], line[j])
+            if cs and cs not in answer:
+                answer.append(cs)
+    ans1, ans2 = sorted(answer, key = lambda x: x[0]), sorted(answer, key = lambda x: x[1])
+    w, h = ans1[-1][0] - ans1[0][0] + 1, ans2[-1][1] - ans2[0][1] + 1
+    sky = [["."] * w for _ in range(h)]
+    midr = [ans1[0][0] + math.ceil(w / 2) -1, ans2[0][1] + math.ceil(h / 2) -1]
+    mids = [h-(math.ceil(h / 2)), math.ceil(w / 2)-1]
+    print(midr, mids)
+    for a in answer:
+        x, y = a[0] - midr[0], a[1] - midr[1]
+        sky[mids[0]-y][mids[1]+x] = '*'
+    stars = [''.join(i) for i in sky]
+    return stars
