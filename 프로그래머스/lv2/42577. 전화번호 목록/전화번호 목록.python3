@@ -1,0 +1,17 @@
+def solution(phone_book):
+    answer = True
+    phone_book = sorted(phone_book, key = lambda x: len(x))
+    pset = set(phone_book)
+    for i in phone_book:
+        for j in range(1, len(i)):
+            if i[:j] in pset:
+                return False
+    else:
+        return True        
+    # for i in range(len(phone_book)):
+    #     for j in range(i+1, len(phone_book)):
+    #         a, b = phone_book[i], phone_book[j]
+    #         if a == b[:len(a)]:
+    #             return False
+    # else:
+    #     return True
