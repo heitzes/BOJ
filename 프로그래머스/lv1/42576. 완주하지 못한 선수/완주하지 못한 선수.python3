@@ -7,9 +7,6 @@ def solution(participant, completion):
         maraton[completion[i]] -= 1
         maraton[participant[i]] += 1
     maraton[participant[-1]] += 1
-    for k in maraton:
-        if maraton[k] != 0:
-            answer = k
-            break
-    
-    return answer
+    for a, b in maraton.items():
+        if b != 0:
+            return a
