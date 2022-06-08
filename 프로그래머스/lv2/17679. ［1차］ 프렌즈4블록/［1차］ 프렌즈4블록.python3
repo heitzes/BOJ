@@ -11,7 +11,7 @@ def find(m, n, arr):
                     ref[i].extend([j, j+1])
                     ref[i+1].extend([j, j+1])
     for k in ref:
-        ref[k] = sorted(list(set(ref[k])))
+        ref[k] = list(set(ref[k]))
         cnt += len(ref[k])
     return cnt, ref
     
