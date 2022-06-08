@@ -1,0 +1,29 @@
+from collections import defaultdict 
+def rotate(arr):
+    return list(map(list, zip(*arr[::-1])))
+def find(m, n, arr):
+    ref = defaultdict(list)
+    cnt = 0
+    for i in range(n-1):
+        for j in range(m-1):
+            if arr[i][j] != 0:
+                if arr[i][j] == arr[i+1][j] == arr[i][j+1] == arr[i+1][j+1]:
+                    ref[i].extend([j, j+1])
+                    ref[i+1].extend([j, j+1])
+    for k in ref:
+        ref[k] = sorted(list(set(ref[k])))
+        cnt += len(ref[k])
+    return cnt, ref
+    
+def solution(m, n, board):
+    answer = 0
+    board = rotate(board)
+    while True:
+        c, ref = find(m, n, board)
+        if c == 0:
+            break
+        answer += c
+        for k, ind in ref.items():
+            board[k] = [board[k][i] for i in range(m) if i not in ind]
+            board[k] = board[k] + [0] * len(ind)
+    return answer
