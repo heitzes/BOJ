@@ -1,18 +1,17 @@
 import heapq
-from collections import defaultdict, deque
+from collections import deque
 def solution(jobs):
     jobs = deque(sorted([[i[1], i[0]] for i in jobs], key = lambda x: (x[1], x[0])))
     jlen = len(jobs)
     heap = []
     heapq.heappush(heap, jobs.popleft())
     cur, ans = 0, 0
-    while jobs or heap:
-        if heap:
-            dur, req = heapq.heappop(heap)
+    while heap:
+        dur, req = heapq.heappop(heap)
         cur = max(cur + dur, req + dur)
         ans += cur - req
         while jobs and jobs[0][1] <= cur:
             heapq.heappush(heap, jobs.popleft())
-        if not heap and jobs:
+        if jobs and not heap:
             heapq.heappush(heap, jobs.popleft())
     return ans // jlen
