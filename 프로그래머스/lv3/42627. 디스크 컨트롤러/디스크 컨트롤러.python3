@@ -8,7 +8,7 @@ def solution(jobs):
         request[i[0]].append([i[0], i[1]])
     cur, nxt = 0, jobs[0][0]
     heapl, jlen = [], len(jobs)
-    while jlen!=0:
+    while jlen != 0:
         heapl.extend(request[cur])
         heapl = deque(sorted(heapl, key=lambda x: x[1]))
         if cur == nxt:
@@ -20,6 +20,5 @@ def solution(jobs):
             else:
                 nxt = cur + 1
         cur += 1
-    answer = (answer//len(jobs))
-    
+    answer = answer // len(jobs)    
     return answer
