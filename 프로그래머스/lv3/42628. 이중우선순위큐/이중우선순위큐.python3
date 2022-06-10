@@ -1,0 +1,19 @@
+import heapq
+from collections import deque
+def solution(operations):
+    answer = []
+    heap = []
+    for op in operations:
+        cmd = op.split()
+        if cmd[0] == 'I':
+            heapq.heappush(heap, int(cmd[1]))
+        else:
+            if heap:
+                if cmd[1] == '1':
+                    heap = heapq.nsmallest(len(heap)-1, heap)
+                else:
+                    heapq.heappop(heap)
+    if not heap:
+        return [0, 0]
+    else:
+        return [heapq.nlargest(1, heap)[0], heap[0]]
