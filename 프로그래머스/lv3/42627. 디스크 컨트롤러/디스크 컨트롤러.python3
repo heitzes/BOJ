@@ -1,24 +1,18 @@
 import heapq
 from collections import defaultdict, deque
 def solution(jobs):
-    answer = 0
-    jobs = sorted(jobs, key=lambda x: (x[0], x[1]))
-    request = defaultdict(list)
-    for i in jobs:
-        request[i[0]].append([i[0], i[1]])
-    cur, nxt = 0, jobs[0][0]
-    heapl, jlen = [], len(jobs)
-    while jlen != 0:
-        heapl.extend(request[cur])
-        heapl = deque(sorted(heapl, key=lambda x: x[1]))
-        if cur == nxt:
-            if heapl:
-                node = heapl.popleft()
-                nxt += node[1]
-                jlen -= 1
-                answer += cur + node[1] - node[0]
-            else:
-                nxt = cur + 1
-        cur += 1
-    answer = answer // len(jobs)    
-    return answer
+    jobs = deque(sorted([[i[1], i[0]] for i in jobs], key = lambda x: (x[1], x[0])))
+    jlen = len(jobs)
+    heap = []
+    heapq.heappush(heap, jobs.popleft())
+    cur, ans = 0, 0
+    while jobs or heap:
+        if heap:
+            dur, req = heapq.heappop(heap)
+        cur = max(cur + dur, req + dur)
+        ans += cur - req
+        while jobs and jobs[0][1] <= cur:
+            heapq.heappush(heap, jobs.popleft())
+        if not heap and jobs:
+            heapq.heappush(heap, jobs.popleft())
+    return ans // jlen
