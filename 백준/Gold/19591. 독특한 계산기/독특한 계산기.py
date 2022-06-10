@@ -1,36 +1,52 @@
-import sys
+import sys, re
 from collections import deque
 def input():
     return sys.stdin.readline().rstrip()
-
+    
+# 첫번째 방법 - 정규표현식 사용
 s = input()
-sets = set(s)
-while '*' in sets or '/' in sets or '+' in sets or '-' in sets:
-    s = s.replace('*', ' a ')
-    s = s.replace('/', ' b ')
-    s = s.replace('+', ' c ')
-    s = s.replace('-', ' d ')
-    sets = set(s)
-slist = s.split()
-odict = {'a': '*', 'b': '/', 'c': '+', 'd': '-'}
-pdict = {'*': 1, '/': 1, '+': 0, '-': 0}
-nlist, olist = [], []
-if slist[0] != 'd':
-    for i in slist:
-        try:
-            nlist.append(int(i))
-        except:
-            olist.append(odict[i])
+if s[0] != '-':
+    nums = deque(map(int, re.split("[-*/+]", s)))
+    ops = deque(re.split("[0-9]+", s)[1:-1])
 else:
-    slist = slist[1:]
-    slist[0] = str(-int(slist[0]))
-    for i in slist:
-        try:
-            nlist.append(int(i))
-        except:
-            olist.append(odict[i])
-nlist = deque(nlist)
-olist = deque(olist)
+    nums = deque(map(int, re.split("[-*/+]", s[1:])))
+    nums.insert(0, -nums.popleft())
+    ops = deque(re.split("[0-9]+", s[1:])[1:-1])
+
+# 두번째 방법 - set, replace 사용
+# sets = set(s)
+# while '*' in sets or '/' in sets or '+' in sets or '-' in sets:
+#     s = s.replace('*', ' a ')
+#     s = s.replace('/', ' b ')
+#     s = s.replace('+', ' c ')
+#     s = s.replace('-', ' d ')
+#     sets = set(s)
+# slist = s.split() 
+
+# 세번째 방법 - for문으로 replace 사용
+# ``이 방법 사용하면 시간초과뜸!
+# refs = s[0]
+# for i in s[1:]:
+#     if i in ['+', '-', '*', '/']:
+#         refs += ' {} '.format(i)
+#     else:
+#         refs += i
+# slist = refs.split()``
+
+# odict = {'a': '*', 'b': '/', 'c': '+', 'd': '-'}
+pdict = {'*': 1, '/': 1, '+': 0, '-': 0}
+# nlist, olist = [], []
+# if slist[0] == 'd':
+#     slist = slist[1:]
+#     slist[0] = str(-int(slist[0]))
+# for i in slist:
+#     try:
+#         nlist.append(int(i))
+#     except:
+#         olist.append(odict[i])
+
+nlist = nums
+olist = ops
 def calculate(o, a, b):
     if o == '*':
         return a*b
@@ -40,7 +56,6 @@ def calculate(o, a, b):
         return a+b
     else:
         return a-b
-
 while True:
     if len(olist) > 1:
         up, down = pdict[olist[0]], pdict[olist[-1]]
@@ -62,7 +77,7 @@ while True:
                 nlist.popleft()
                 nlist.popleft()
                 nlist.insert(0, upc)
-            elif upc < downc:
+            else:
                 olist.pop()
                 nlist.pop()
                 nlist.pop()
