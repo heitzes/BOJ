@@ -7,15 +7,15 @@ def solution(jobs):
     for i in jobs:
         request[i[0]].append([i[0], i[1]])
     cur, nxt = 0, jobs[0][0]
-    status = True
-    heapl = []
-    while cur < 1000001:
+    heapl, jlen = [], len(jobs)
+    while jlen!=0:
         heapl.extend(request[cur])
         heapl = deque(sorted(heapl, key=lambda x: x[1]))
         if cur == nxt:
             if heapl:
                 node = heapl.popleft()
                 nxt += node[1]
+                jlen -= 1
                 answer += cur + node[1] - node[0]
             else:
                 nxt = cur + 1
