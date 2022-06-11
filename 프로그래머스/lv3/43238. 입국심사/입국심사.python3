@@ -1,0 +1,15 @@
+def count(n, times):
+    return sum([n//t for t in times])
+
+def solution(n, times):
+    answer = 0
+    left, right = 0, 1000000000000000000
+    mid, cnt = 0, 0
+    while left < right:
+        mid = (left + right) // 2
+        cnt = count(mid, times) 
+        if cnt < n:
+            left = mid + 1
+        else:
+            right = mid            
+    return (left+right)//2
