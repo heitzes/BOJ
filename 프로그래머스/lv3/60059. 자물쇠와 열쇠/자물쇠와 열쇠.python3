@@ -8,30 +8,22 @@ def large(n, m, lock):
 def rotate(key):
     return list(zip(*key[::-1]))
 def check(copyl, key, a, b, n, m):
-    unlock = True
     for i in range(m):
         for j in range(m):
             copyl[a+i][b+j] += key[i][j]
     for i in range(m-1, n+m-1):
-        if unlock:
-            for j in range(m-1, n+m-1):
-                if copyl[i][j] in [0, 2]:
-                    return False
-    return unlock
+        for j in range(m-1, n+m-1):
+            if copyl[i][j] in [0, 2]:
+                return False
+    return True
 def solution(key, lock):
-    answer = False
-    key_up = sum([sum(k) for k in key])
-    lock_down = sum([len(l)-sum(l) for l in lock])
     n, m = len(lock), len(key)
     largelock = large(n, m, lock)
-    if key_up < lock_down:
-        return False
-    else:
-        for _ in range(4):
-            key = rotate(key)
-            for a in range(n+m-1):
-                for b in range(n+m-1):
-                    copyl = copy.deepcopy(largelock)
-                    if check(copyl, key, a, b, n, m):
-                        return True
-    return answer
+    for _ in range(4):
+        key = rotate(key)
+        for a in range(n+m-1):
+            for b in range(n+m-1):
+                copyl = copy.deepcopy(largelock)
+                if check(copyl, key, a, b, n, m):
+                    return True
+    return False
