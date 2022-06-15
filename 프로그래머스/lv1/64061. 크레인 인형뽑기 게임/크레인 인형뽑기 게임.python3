@@ -1,0 +1,16 @@
+def rotate(board):
+    board = [[k for k in i if k!= 0] for i in list(zip(*board[::-1]))]
+    return board
+def solution(board, moves):
+    answer = 0
+    stack = []
+    board = rotate(board)
+    for m in moves:
+        if board[m-1]:
+            popped = board[m-1].pop()
+            if stack and stack[-1] == popped:
+                stack.pop()
+                answer += 2
+            else:
+                stack.append(popped)
+    return answer
