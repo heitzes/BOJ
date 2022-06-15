@@ -1,0 +1,39 @@
+from itertools import combinations
+def findp(place):
+    ps = []
+    for i in range(5):
+        for j in range(5):
+            if place[i][j] == 'P':
+                ps.append([i, j])
+    return ps
+def findm(clist):
+    check = []
+    for c in clist:
+        if abs(c[0][0]-c[1][0]) + abs(c[0][1]-c[1][1]) <= 2:
+            check.append(c)
+    return check
+def partition(clist, place):
+    condition = 0
+    for c in clist:
+        if c[0][1] == c[1][1]:
+            if place[(c[0][0]+c[1][0])//2][c[0][1]] != 'X':
+                break
+        elif c[0][0] == c[1][0]:
+            if place[c[0][0]][(c[0][1]+c[1][1])//2] != 'X':
+                break
+        else:
+            if place[c[0][0]][c[1][1]] != 'X' or place[c[1][0]][c[0][1]] !='X':
+                break
+    else:
+        condition = 1
+    return condition
+            
+                
+def solution(places):
+    answer = []
+    wait = []
+    for p in places:
+        comb = combinations(findp(p), 2)
+        checklist = findm(comb)
+        answer.append(partition(checklist, p))
+    return answer
