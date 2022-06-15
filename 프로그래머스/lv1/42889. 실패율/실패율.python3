@@ -1,0 +1,17 @@
+def solution(N, stages):
+    answer = []
+    sdict = {i+1: [0, 0, 0] for i in range(N+1)}
+    for s in stages:
+        sdict[s][0] += 1
+    sdict[N+1][1] = sdict[N+1][0]
+    for k in range(N, 0, -1):
+        sdict[k][1] = sdict[k+1][1] + sdict[k][0]
+        if sdict[k][1] == 0:
+            sdict[k][2] = 0
+        else:
+            sdict[k][2] = sdict[k][0] / sdict[k][1]
+    svals = sorted(list(sdict.items()), key=lambda x: (x[1][2], -x[0]), reverse=True)
+    for s in svals:
+        if s[0] <= N:
+            answer.append(s[0])
+    return answer
