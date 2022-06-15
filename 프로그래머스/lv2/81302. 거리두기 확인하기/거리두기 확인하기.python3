@@ -26,12 +26,9 @@ def partition(clist, place):
                 break
     else:
         condition = 1
-    return condition
-            
-                
+    return condition        
 def solution(places):
     answer = []
-    wait = []
     for p in places:
         comb = combinations(findp(p), 2)
         checklist = findm(comb)
