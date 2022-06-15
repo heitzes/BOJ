@@ -16,8 +16,7 @@ def check(copyl, key, a, b, n, m):
         if unlock:
             for j in range(m-1, n+m-1):
                 if copyl[i][j] in [0, 2]:
-                    unlock = False
-                    break
+                    return False
     return unlock
 def solution(key, lock):
     answer = False
@@ -33,6 +32,6 @@ def solution(key, lock):
             for a in range(n+m-1):
                 for b in range(n+m-1):
                     copyl = copy.deepcopy(largelock)
-                    if (check(copyl, key, a, b, n, m)):
-                        answer = True
+                    if check(copyl, key, a, b, n, m):
+                        return True
     return answer
