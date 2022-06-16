@@ -1,14 +1,11 @@
 def solution(number, k):
-    stack = [[0, int(number[0])]]
-    remove = []
-    for i, n in enumerate(number[1:]):
-        if len(remove) != k:
-            while stack and stack[-1][1] < int(n):
-                remove.append(stack.pop())
-                if len(remove) == k:
-                    break
-        stack.append([i, int(n)])
-    answer = ''.join([str(i[1]) for i in stack])
-    if answer == number:
+    stack = [number[0]]
+    for n in number[1:]:
+        while stack and int(stack[-1]) < int(n) and k > 0:
+            stack.pop()
+            k -= 1
+        stack.append(n)
+    answer = ''.join(stack)
+    if k != 0:
         answer = answer[:-k]
     return answer
