@@ -1,0 +1,19 @@
+def solution(name):
+    answer = 0
+    nen = len(name)
+    poslist = []
+    for i in range(nen):
+        alpha = name[i]
+        if alpha != 'A' and i != 0:
+            poslist.append(i)
+        answer += min(ord(alpha) - 65, 91 - ord(alpha))
+    if poslist:
+        cnt = min(max(poslist), nen-min(poslist))
+        for i in range(1, len(poslist)):
+            left_right = poslist[:i] + poslist[i:][::-1]
+            right_left = poslist[-i:][::-1] + poslist[:-i]
+            left = max(poslist[:i])*2 + nen-min(poslist[i:][::-1])
+            right = (nen - min(poslist[-i:][::-1]))*2 + max(poslist[:-i])
+            cnt = min(cnt, min(left, right))
+        answer += cnt
+    return answer
