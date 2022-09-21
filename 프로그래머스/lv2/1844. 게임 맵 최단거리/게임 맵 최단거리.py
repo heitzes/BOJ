@@ -18,12 +18,5 @@ def bfs(game):
             if 0 <= a <= n and 0 <= b <= m and game[a][b] == 1:
                 game[a][b] += 1
                 dq.append([a, b, r + 1])
-            # if a == n and b == m:
-            #     find = True
-            #     return r + 1
-            # if a <= n and a >= 0 and b <= m and b >= 0:
-            #     if not v[a][b] and game[a][b] == 1:
-            #         if [a, b, r + 1] not in dq:
-            #             dq.append([a, b, r + 1])
     else:
         return -1            
