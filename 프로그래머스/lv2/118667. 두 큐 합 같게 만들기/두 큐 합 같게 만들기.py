@@ -9,9 +9,7 @@ def solution(queue1, queue2):
     if int(target) != target:
         return -1
     while True:
-        if ans > 1000000:
-            break
-        if ref[0] == 0 or ref[1] == 0:
+        if ans > 600000:
             break
         if ref[0] > ref[1]:
             ref[0] -= queue1[0]
