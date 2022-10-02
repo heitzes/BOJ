@@ -1,5 +1,7 @@
 # 징검다리 건너기
-
+# 건너간 아이들의 수를 binary search를 이용하여 찾는다
+# 건너간 아이들의 수가 mid 일때, 이들이 건너갈때 점프한게 k보다 크다면 아이들의 수를 줄인다
+# 만약 k보다 작거나 같으면 아이들의 수를 늘린다
 def solution(stones, k):
     answer = 0
     left, right = 1, max(stones)
