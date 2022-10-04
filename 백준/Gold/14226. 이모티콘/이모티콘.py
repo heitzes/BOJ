@@ -6,10 +6,6 @@ s = int(input())
 
 dp = [i for i in range(s+1)]
 for i in range(2, s+1):
-    if i % 2:
-        dp[i] = min(dp[i], dp[i//2+1]+3)
-    else:
-        dp[i] = min(dp[i], dp[i//2]+2)
     for j in range(i+1, s+1):
         if j % i == 0:
             dp[j] = min(dp[j], dp[i]+1+(j//i-1))
