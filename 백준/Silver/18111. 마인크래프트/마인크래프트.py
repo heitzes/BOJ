@@ -1,24 +1,26 @@
 import sys
+from collections import Counter
 def input():
     return sys.stdin.readline().rstrip()
 n, m, b = map(int, input().split())
-maps = [list(map(int, input().split())) for _ in range(n)]
-mini = min([min(i) for i in maps])
-maxi = max([max(i) for i in maps])
-answer = []
-for h in range(mini, maxi+1):
+maps = []
+for _ in range(n):
+    maps.extend(list(map(int, input().split())))
+mini = min(maps)
+maxi = max(maps)
+counter = Counter(maps)
+best_ans, best_h = float('inf'), maxi
+for h in range(maxi, mini-1, -1):
     ans = 0
     cnt = b
-    for i in range(n):
-        for j in range(m):
-            diff = maps[i][j] - h
-            if diff > 0:
-                cnt += diff
-                ans += diff * 2
-            else:
-                cnt -= -diff
-                ans += -diff
-    if cnt >= 0:
-        answer.append([ans, h])
-answer = sorted(answer, key = lambda x: (x[0], -x[1]))
-print(*answer[0])
+    for v, c in counter.items():
+        if v > h:
+            cnt += c * (v - h)
+            ans += c * 2 * (v - h)
+        else:
+            cnt -= c * (h - v)
+            ans += c * (h - v)
+    if ans < best_ans and cnt >= 0:
+        best_ans = ans
+        best_h = h
+print(best_ans, best_h)
