@@ -1,19 +1,12 @@
+import heapq
 def solution(routes):
-    answer = 1
-    routes = sorted(routes, key = lambda x: (x[0], x[1]))
-    cur, ref = min(routes[0]), max(routes[0])
-    while True:
-        route = routes.pop(0)
-        start, end = min(route), max(route)
-        if cur <= start:
-            if start <= ref:
-                cur = start
-                ref = min(end, ref)
-            else:
-                answer += 1
-                cur = start
-                ref = end
-        if len(routes) == 0:
-            break
-        
+    answer = 0
+    hq = []
+    for route in routes:
+        heapq.heappush(hq, [route[1], route[0]])
+    while hq:
+        key = heapq.heappop(hq)
+        answer += 1
+        while hq and (hq[0][1] <= key[0]):
+            heapq.heappop(hq)
     return answer
